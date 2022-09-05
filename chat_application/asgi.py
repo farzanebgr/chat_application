@@ -15,10 +15,17 @@ from django.core.asgi import get_asgi_application
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'chat_application.settings')
 
 application = ProtocolTypeRouter({
+    # Protocol for http request!
     "http": get_asgi_application(),
+    #Protocol for websocket request!!
     "websocket": AllowedHostsOriginValidator(
-        URLRouter(
-            chat.routing.websocket_urlpatterns
+        # Authenticated user in scope
+        AuthMiddlewareStack(
+            # Routing url
+            URLRouter(
+                # Read urls from this file
+                chat.routing.websocket_urlpatterns
+            )
         )
-    )
+    ),
 })
