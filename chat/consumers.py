@@ -1,12 +1,15 @@
-from channels.generic.websocket import WebsocketConsumer
 import json
+
+from channels.generic.websocket import WebsocketConsumer
 
 class ChatConsumer(WebsocketConsumer):
     def connect(self):
         # Accepts an incoming socket
         self.accept()
+
     def disconnect(self, close_code):
         pass
+
     def receive(self, text_data):
         # Change type from json to python object ...
         text_data_dict = json.loads(text_data)
